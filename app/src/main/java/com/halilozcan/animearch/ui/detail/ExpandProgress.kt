@@ -40,7 +40,7 @@ fun ExpandProgress(
                 onProgressChanged(scrollState.value.toFloat() / scrollState.maxValue.toFloat() * 100f)
             }
 
-            ReadProgress(
+            VerticalProgress(
                 newProgress = progress,
                 modifier = Modifier
                     .padding(top = 8.dp)
@@ -54,9 +54,9 @@ fun ExpandProgress(
 }
 
 @Composable
-fun ReadProgress(newProgress: Float, modifier: Modifier = Modifier) {
+fun VerticalProgress(newProgress: Float, modifier: Modifier = Modifier) {
     val progress = animateFloatAsState(targetValue = newProgress / 100)
-    Column(
+    Box(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(Color.LightGray)
@@ -64,8 +64,7 @@ fun ReadProgress(newProgress: Float, modifier: Modifier = Modifier) {
     ) {
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .weight(if (progress.value == 0f) 0.001f else progress.value)
+                .fillMaxHeight(progress.value)
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
@@ -77,11 +76,6 @@ fun ReadProgress(newProgress: Float, modifier: Modifier = Modifier) {
                         )
                     )
                 )
-        )
-        Box(
-            modifier = Modifier
-                .weight(if ((1 - progress.value) == 0f) 0.0001f else 1 - progress.value)
-                .fillMaxWidth()
         )
     }
 }
