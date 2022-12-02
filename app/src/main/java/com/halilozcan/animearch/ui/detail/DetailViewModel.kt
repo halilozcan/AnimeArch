@@ -3,6 +3,7 @@ package com.halilozcan.animearch.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.halilozcan.animearch.R
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.domain.entity.SingleAnimeEntity
 import com.halilozcan.animearch.domain.mapper.AnimeBaseMapper
@@ -36,7 +37,7 @@ class DetailViewModel @Inject constructor(
                 getSingleCharacterUseCase(animeId).collect {
                     when (it) {
                         is NetworkResponseState.Error -> {
-                            _screenState.emit(ScreenState.Error(it.exception.message.orEmpty()))
+                            _screenState.emit(ScreenState.Error(R.string.error))
                         }
                         is NetworkResponseState.Success -> {
                             _screenState.emit(ScreenState.Success(mapper.map(it.result)))
@@ -45,7 +46,7 @@ class DetailViewModel @Inject constructor(
                     }
                 }
             } ?: kotlin.run {
-                _screenState.emit(ScreenState.Error("Unable to get anime details"))
+                _screenState.emit(ScreenState.Error(R.string.error))
             }
         }
     }
