@@ -28,10 +28,10 @@ data class HomeViewModel @Inject constructor(
     val screenState: Flow<ScreenState<List<AnimeHomeUiData>>> get() = _screenState
 
     init {
-        getTopPokeCards()
+        getTopAnimeCards()
     }
 
-    private fun getTopPokeCards() {
+    private fun getTopAnimeCards() {
         viewModelScope.launch {
             getTopCharacterUseCase().collectLatest {
                 when (it) {

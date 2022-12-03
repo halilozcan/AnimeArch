@@ -1,8 +1,7 @@
-package com.halilozcan.animearch.data
+package com.halilozcan.animearch.data.api
 
 import com.google.common.truth.Truth.assertThat
 import com.halilozcan.animearch.SERVER_RESPONSE_FILE_NAME
-import com.halilozcan.animearch.data.api.AnimeApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -14,7 +13,7 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-internal class PokeApiTest {
+internal class AnimeApiTest {
 
     private val mockWebServer: MockWebServer = MockWebServer()
 
