@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.halilozcan.animearch.ui.detail.DetailScreen
+import com.halilozcan.animearch.ui.detail.DetailRoute
 import com.halilozcan.animearch.ui.home.HomeRoute
 
 @Composable
@@ -25,7 +25,7 @@ fun AnimeNavHost(
             route = Detail.routeWithArgs,
             arguments = Detail.arguments
         ) {
-            DetailScreen()
+            DetailRoute()
         }
     }
 }

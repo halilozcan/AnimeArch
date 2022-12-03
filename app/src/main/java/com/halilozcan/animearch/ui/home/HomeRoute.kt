@@ -72,12 +72,8 @@ fun HomeScreen(
 }
 
 @Composable
-fun BoxScope.Error(@StringRes message: Int) {
-    Column(
-        modifier = Modifier
-            .align(Alignment.Center)
-            .wrapContentSize(align = Alignment.Center)
-    ) {
+fun Error(@StringRes message: Int, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.wrapContentSize(align = Alignment.Center)) {
         val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.error))
         LottieAnimation(
             composition = composition,
@@ -90,7 +86,7 @@ fun BoxScope.Error(@StringRes message: Int) {
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.error),
+            text = stringResource(message),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
             textAlign = TextAlign.Center
