@@ -2,6 +2,7 @@ package com.halilozcan.animearch.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.halilozcan.animearch.R
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.domain.entity.TopAnimeEntity
 import com.halilozcan.animearch.domain.mapper.AnimeListMapper
@@ -35,7 +36,7 @@ data class HomeViewModel @Inject constructor(
             getTopCharacterUseCase().collectLatest {
                 when (it) {
                     is NetworkResponseState.Error -> {
-                        _screenState.emit(ScreenState.Error(it.exception.message.orEmpty()))
+                        _screenState.emit(ScreenState.Error(R.string.error))
                     }
                     NetworkResponseState.Loading -> {
                         _screenState.emit(ScreenState.Loading)
