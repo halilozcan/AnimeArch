@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.halilozcan.animearch.ui.detail.DetailScreen
-import com.halilozcan.animearch.ui.home.HomeScreen
+import com.halilozcan.animearch.ui.detail.DetailRoute
+import com.halilozcan.animearch.ui.home.HomeRoute
 
 @Composable
 fun AnimeNavHost(
@@ -15,7 +15,7 @@ fun AnimeNavHost(
 ) {
     NavHost(navController = navController, startDestination = Home.route, modifier = modifier) {
         composable(route = Home.route) {
-            HomeScreen(onAnimeClicked = {
+            HomeRoute(onAnimeClicked = {
                 val route = "${Detail.route}/${it.id}"
                 navController.navigate(route = route)
             })
@@ -25,7 +25,7 @@ fun AnimeNavHost(
             route = Detail.routeWithArgs,
             arguments = Detail.arguments
         ) {
-            DetailScreen()
+            DetailRoute()
         }
     }
 }

@@ -2,6 +2,7 @@ package com.halilozcan.animearch.ui.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,37 +21,50 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.halilozcan.animearch.R
 import com.halilozcan.animearch.ui.AnimeHomeUiData
 import com.halilozcan.animearch.ui.ScreenState
 import com.halilozcan.animearch.ui.theme.AnimeArchTheme
 
+const val LOADING_ITEM_LAZY_COLUMN_TEST_TAG = "loading_item_lazy_column_test_tag"
+
 @Composable
-fun HomeScreen(
+fun HomeRoute(
     onAnimeClicked: (AnimeHomeUiData) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.screenState.collectAsState(initial = ScreenState.Loading)
+    HomeScreen(uiState = uiState, onAnimeClicked = onAnimeClicked)
+}
 
+@Composable
+fun HomeScreen(
+    uiState: ScreenState<List<AnimeHomeUiData>>,
+    onAnimeClicked: (AnimeHomeUiData) -> Unit
+) {
     Surface(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)) {
         Box(modifier = Modifier.fillMaxSize()) {
             when (uiState) {
                 is ScreenState.Error -> {
-                    Error()
+                    Error(uiState.message)
                 }
                 ScreenState.Loading -> {
                     Loading()
                 }
                 is ScreenState.Success -> {
-                    AnimeList(
-                        (uiState as ScreenState.Success).uiData,
-                        onAnimeClicked = onAnimeClicked
-                    )
+                    AnimeList(animeList = uiState.uiData, onAnimeClicked = onAnimeClicked)
                 }
             }
         }
@@ -58,8 +72,26 @@ fun HomeScreen(
 }
 
 @Composable
-fun Error() {
+fun Error(@StringRes message: Int, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.wrapContentSize(align = Alignment.Center)) {
+        val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.error))
+        LottieAnimation(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier
+                .align(alignment = Alignment.CenterHorizontally)
+                .fillMaxWidth(fraction = 0.8f)
+                .height(200.dp)
+        )
 
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(message),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 @Composable
@@ -69,6 +101,7 @@ fun Loading() {
     }.toMutableList()
 
     LazyColumn(
+        modifier = Modifier.testTag(LOADING_ITEM_LAZY_COLUMN_TEST_TAG),
         userScrollEnabled = false,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -234,5 +267,15 @@ fun AnimePreview() {
 fun LoadingItemPreview() {
     AnimeArchTheme {
         LoadingItem()
+    }
+}
+
+@Preview
+@Composable
+fun ErrorPreview() {
+    AnimeArchTheme {
+        Box {
+            Error(R.string.error)
+        }
     }
 }

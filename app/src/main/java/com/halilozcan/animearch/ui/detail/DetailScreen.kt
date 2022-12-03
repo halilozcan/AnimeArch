@@ -1,6 +1,5 @@
 package com.halilozcan.animearch.ui.detail
 
-import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,31 +9,29 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.halilozcan.animearch.ui.AnimeDetailUiData
 import com.halilozcan.animearch.ui.ScreenState
+import com.halilozcan.animearch.ui.home.Error
 
 @Composable
-fun DetailScreen(viewModel: DetailViewModel = hiltViewModel()) {
+fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
     val uiState by viewModel.screenState.collectAsState(initial = ScreenState.Loading)
+    DetailScreen(uiState = uiState)
+}
 
+@Composable
+fun DetailScreen(uiState: ScreenState<AnimeDetailUiData>) {
     Surface(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)) {
         Box(modifier = Modifier.fillMaxSize()) {
             when (uiState) {
                 is ScreenState.Error -> {
-                    Toast.makeText(
-                        LocalContext.current,
-                        (uiState as ScreenState.Error).message,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Error(message = uiState.message)
                 }
                 ScreenState.Loading -> Unit
                 is ScreenState.Success -> {
-                    SuccessScreen(
-                        (uiState as ScreenState.Success).uiData, modifier = Modifier.padding(16.dp)
-                    )
+                    SuccessScreen(uiData = uiState.uiData, modifier = Modifier.padding(16.dp))
                 }
             }
         }
