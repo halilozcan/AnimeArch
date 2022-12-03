@@ -6,7 +6,7 @@ import com.halilozcan.animearch.R
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.domain.entity.TopAnimeEntity
 import com.halilozcan.animearch.domain.mapper.AnimeListMapper
-import com.halilozcan.animearch.domain.usecase.GetTopCharacterUseCase
+import com.halilozcan.animearch.domain.usecase.top.GetTopCharacterUseCase
 import com.halilozcan.animearch.ui.AnimeHomeUiData
 import com.halilozcan.animearch.ui.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel

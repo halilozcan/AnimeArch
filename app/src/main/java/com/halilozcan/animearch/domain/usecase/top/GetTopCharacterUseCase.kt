@@ -1,4 +1,4 @@
-package com.halilozcan.animearch.domain.usecase
+package com.halilozcan.animearch.domain.usecase.top
 
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.data.dto.top.Anime
