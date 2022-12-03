@@ -1,7 +1,10 @@
 package com.halilozcan.animearch.data.api
 
 import com.google.common.truth.Truth.assertThat
-import com.halilozcan.animearch.SERVER_RESPONSE_FILE_NAME
+import com.halilozcan.animearch.SERVER_PORT
+import com.halilozcan.animearch.SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME
+import com.halilozcan.animearch.TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME
+import com.halilozcan.animearch.singleAnimePathId
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -21,7 +24,7 @@ internal class AnimeApiTest {
 
     @Before
     fun setup() {
-        mockWebServer.start(port = 8000)
+        mockWebServer.start(port = SERVER_PORT)
         animeApi = Retrofit.Builder()
             .baseUrl(mockWebServer.url(""))
             .addConverterFactory(GsonConverterFactory.create())
@@ -29,10 +32,13 @@ internal class AnimeApiTest {
             .create(AnimeApi::class.java)
     }
 
+    /**
+     * TopAnimeCharacters Test
+     */
     @Test
     fun response_whenTopAnimateSearched_isNotNull() {
         runBlocking {
-            enqueueMockResponse(SERVER_RESPONSE_FILE_NAME)
+            enqueueMockResponse(TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME)
             val response = animeApi.getTopCharacters()
             mockWebServer.takeRequest()
             assertThat(response).isNotNull()
@@ -42,7 +48,7 @@ internal class AnimeApiTest {
     @Test
     fun requestPath_whenTopAnimatesRequested_isSameWithRequest() {
         runBlocking {
-            enqueueMockResponse(SERVER_RESPONSE_FILE_NAME)
+            enqueueMockResponse(TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME)
             animeApi.getTopCharacters()
             val request = mockWebServer.takeRequest()
             assertThat(request.path).isEqualTo("/top/characters")
@@ -50,12 +56,45 @@ internal class AnimeApiTest {
     }
 
     @Test
-    fun firstElement_whenTopAnimatesRequested_isExpected() {
+    fun firstElement_whenTopAnimeCharactersRequested_hasSameName() {
         runBlocking {
-            enqueueMockResponse(SERVER_RESPONSE_FILE_NAME)
+            enqueueMockResponse(TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME)
             val response = animeApi.getTopCharacters()
             val firstItem = response.data.first()
             assertThat(firstItem.name).isEqualTo("Lelouch Lamperouge")
+        }
+    }
+
+    /**
+     * SingleAnimeCharacter Test
+     */
+    @Test
+    fun response_whenSingleAnimateSearched_isNotNull() {
+        runBlocking {
+            enqueueMockResponse(SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME)
+            val response = animeApi.getSingleCharacterFull(singleAnimePathId)
+            mockWebServer.takeRequest()
+            assertThat(response).isNotNull()
+        }
+    }
+
+    @Test
+    fun requestPath_whenSingleAnimeRequested_isSameWithRequest() {
+        runBlocking {
+            enqueueMockResponse(SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME)
+            animeApi.getSingleCharacterFull(singleAnimePathId)
+            val request = mockWebServer.takeRequest()
+            assertThat(request.path).isEqualTo("/characters/$singleAnimePathId/full")
+        }
+    }
+
+    @Test
+    fun animeName_whenSingleAnimeRequested_isSame() {
+        runBlocking {
+            enqueueMockResponse(SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME)
+            val response = animeApi.getSingleCharacterFull(singleAnimePathId)
+            val firstItem = response.data
+            assertThat(firstItem?.name).isEqualTo("Lelouch Lamperouge")
         }
     }
 
@@ -73,5 +112,4 @@ internal class AnimeApiTest {
     fun shutDown() {
         mockWebServer.shutdown()
     }
-
 }
