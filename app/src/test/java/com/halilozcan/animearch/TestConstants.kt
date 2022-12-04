@@ -10,6 +10,8 @@ import com.halilozcan.animearch.data.dto.top.Anime
 import com.halilozcan.animearch.data.dto.top.TopAnimeCharacterResponse
 import com.halilozcan.animearch.domain.entity.SingleAnimeEntity
 import com.halilozcan.animearch.domain.entity.TopAnimeEntity
+import com.halilozcan.animearch.ui.AnimeDetailUiData
+import com.halilozcan.animearch.ui.AnimeHomeUiData
 
 const val TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME = "TopAnimeCharactersResponse.json"
 const val SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME = "SingleAnimeCharacterResponse.json"
@@ -84,4 +86,22 @@ val topAnimeEntity = TopAnimeEntity(
 
 @VisibleForTesting
 val topAnimeEntities = listOf(topAnimeEntity)
+
+@VisibleForTesting
+val animeHomeUiData = AnimeHomeUiData(
+    id = "417",
+    name = "Lelouch Lamperouge",
+    description = "",
+    imageUrl = "https://cdn.myanimelist.net/images/characters/8/406163.webp"
+)
+
+val animeDetailUiData = AnimeDetailUiData(
+    name = "Lelouch Lamperouge",
+    nameKanji = "ルルーシュ・ランペルージ",
+    description = "",
+    imageUrl = "https://cdn.myanimelist.net/images/characters/8/406163.webp",
+    favorites = 159789
+)
+
+val topAnimeUiList = listOf(animeHomeUiData)
 

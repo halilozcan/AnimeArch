@@ -1,5 +1,6 @@
 package com.halilozcan.animearch.ui.home
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.halilozcan.animearch.R
@@ -10,8 +11,9 @@ import com.halilozcan.animearch.domain.usecase.top.GetTopCharacterUseCase
 import com.halilozcan.animearch.ui.AnimeHomeUiData
 import com.halilozcan.animearch.ui.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,13 +27,14 @@ data class HomeViewModel @Inject constructor(
 
     private val _screenState =
         MutableStateFlow<ScreenState<List<AnimeHomeUiData>>>(value = ScreenState.Loading)
-    val screenState: Flow<ScreenState<List<AnimeHomeUiData>>> get() = _screenState
+    val screenState: StateFlow<ScreenState<List<AnimeHomeUiData>>> get() = _screenState.asStateFlow()
 
     init {
         getTopAnimeCards()
     }
 
-    private fun getTopAnimeCards() {
+    @VisibleForTesting
+    fun getTopAnimeCards() {
         viewModelScope.launch {
             getTopCharacterUseCase().collectLatest {
                 when (it) {

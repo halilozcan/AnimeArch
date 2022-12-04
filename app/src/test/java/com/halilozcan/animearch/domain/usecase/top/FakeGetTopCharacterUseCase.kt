@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 
-class FakeGetTopCharacterUseCase {
+class FakeGetTopCharacterUseCase : GetTopCharacterUseCase {
     private var showError = false
 
     fun updateShowError(showError: Boolean) {
         this.showError = showError
     }
 
-    operator fun invoke(): Flow<NetworkResponseState<List<TopAnimeEntity>>> = flow {
+    override operator fun invoke(): Flow<NetworkResponseState<List<TopAnimeEntity>>> = flow {
         emit(NetworkResponseState.Loading)
 
         if (showError) {

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 
-class FakeGetSingleCharacterUseCase {
+class FakeGetSingleCharacterUseCase : GetSingleCharacterUseCase {
 
     private var showError = false
 
@@ -15,7 +15,7 @@ class FakeGetSingleCharacterUseCase {
         this.showError = showError
     }
 
-    operator fun invoke(id: String): Flow<NetworkResponseState<SingleAnimeEntity>> = flow {
+    override operator fun invoke(id: String): Flow<NetworkResponseState<SingleAnimeEntity>> = flow {
         emit(NetworkResponseState.Loading)
 
         if (showError) {
