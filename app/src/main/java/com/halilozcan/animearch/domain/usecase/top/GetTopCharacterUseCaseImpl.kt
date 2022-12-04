@@ -1,4 +1,4 @@
-package com.halilozcan.animearch.domain.usecase
+package com.halilozcan.animearch.domain.usecase.top
 
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.data.dto.top.Anime
@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetTopCharacterUseCase @Inject constructor(
+class GetTopCharacterUseCaseImpl @Inject constructor(
     private val repository: AnimeRepository,
     private val mapper: AnimeListMapper<Anime, TopAnimeEntity>
-) {
-    operator fun invoke(): Flow<NetworkResponseState<List<TopAnimeEntity>>> = flow {
+) : GetTopCharacterUseCase {
+    override operator fun invoke(): Flow<NetworkResponseState<List<TopAnimeEntity>>> = flow {
         emit(NetworkResponseState.Loading)
 
         when (val response = repository.getTopAnimeCharacters()) {
