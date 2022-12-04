@@ -1,6 +1,6 @@
 <h1 align="center">AnimeArch</h1></br>
 <p align="center">  
-A top anime info app for teaching how to use Jetpack Compose (State, Navigation, Animation etc..) with Clean Architecture
+An anime info app for teaching how to use Jetpack Compose (State, Navigation, Animation etc..) with Clean Architecture and shows how to write Unit & Ui test
 </p>
 </br>
 
