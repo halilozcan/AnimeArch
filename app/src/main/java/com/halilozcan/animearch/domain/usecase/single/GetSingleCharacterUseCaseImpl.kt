@@ -1,4 +1,4 @@
-package com.halilozcan.animearch.domain.usecase
+package com.halilozcan.animearch.domain.usecase.single
 
 import com.halilozcan.animearch.data.NetworkResponseState
 import com.halilozcan.animearch.data.dto.single.AnimeCharacter
@@ -9,11 +9,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetSingleCharacterUseCase @Inject constructor(
+class GetSingleCharacterUseCaseImpl @Inject constructor(
     private val repository: AnimeRepository,
     private val mapper: AnimeBaseMapper<AnimeCharacter, SingleAnimeEntity>
-) {
-    operator fun invoke(id: String): Flow<NetworkResponseState<SingleAnimeEntity>> = flow {
+) : GetSingleCharacterUseCase {
+
+    override operator fun invoke(id: String): Flow<NetworkResponseState<SingleAnimeEntity>> = flow {
         emit(NetworkResponseState.Loading)
 
         when (val response = repository.getSingleCharacter(id)) {

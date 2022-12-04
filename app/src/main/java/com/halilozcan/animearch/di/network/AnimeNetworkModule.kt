@@ -35,7 +35,7 @@ object AnimeNetworkModule {
 
     @Provides
     @ViewModelScoped
-    fun providePokeApi(client: OkHttpClient): AnimeApi {
+    fun provideAnimeApi(client: OkHttpClient): AnimeApi {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.ANIME_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
