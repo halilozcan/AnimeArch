@@ -5,20 +5,37 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+ext {
+    compile_sdk_version = 33
+    min_sdk_version = 21
+    target_sdk_version = 33
+    version_code = 1
+    version_name = "1.0"
+}
+
 android {
     namespace 'com.halilozcan.animearch'
-    compileSdk 33
+    compileSdk project.ext.compile_sdk_version
 
     defaultConfig {
         applicationId "com.halilozcan.animearch"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk project.ext.min_sdk_version
+        targetSdk project.ext.target_sdk_version
+        versionCode project.ext.version_code
+        versionName project.ext.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'animearch'
+            keyPassword 'animearch'
+            storePassword 'animearch'
+            storeFile file("${rootDir}/keystores/animearch.jks")
         }
     }
 
@@ -50,6 +67,10 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+
+    task printVersionName {
+        println project.ext.version_name
     }
 }
 
