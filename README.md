@@ -34,6 +34,11 @@ A top anime info app for teaching how to use Jetpack Compose (State, Navigation,
 - [Retrofit](https://square.github.io/retrofit/) A type-safe HTTP client for Android and Java
 - [OkHttp](https://square.github.io/okhttp/) An HTTP client that efficiently make network requests
 - [Coil Compose](https://coil-kt.github.io/coil/compose/) An image loading library for Android backed by Kotlin Coroutines
+- Testing
+  - [Mockito](https://site.mockito.org/) A mocking framework that tastes really good. It lets you write beautiful tests with a clean & simple API
+  - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) A scriptable web server for testing HTTP clients
+  - [Truth](https://truth.dev/) A library for performing assertions in tests
+  - [Turbine](https://github.com/cashapp/turbine) A small testing library for kotlinx.coroutines Flow
 - [Material Design 3](https://m3.material.io/) is the latest version of Google’s open-source design system.
 
 ## Package Structure
