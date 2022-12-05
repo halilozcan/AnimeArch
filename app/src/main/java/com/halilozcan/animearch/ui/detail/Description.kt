@@ -26,6 +26,6 @@ fun Description(
         text = text,
         modifier = modifier
             .verticalScroll(scrollState)
-            .padding(8.dp)
+            .padding(16.dp)
     )
 }
