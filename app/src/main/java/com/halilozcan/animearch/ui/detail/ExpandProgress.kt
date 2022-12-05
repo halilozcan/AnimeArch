@@ -23,10 +23,11 @@ fun ExpandProgress(
     isExpanded: Boolean,
     progress: Float,
     scrollState: ScrollState,
+    modifier: Modifier = Modifier,
     onExpandClicked: () -> Unit,
     onProgressChanged: (Float) -> Unit
 ) {
-    Column(modifier = Modifier.wrapContentHeight()) {
+    Column(modifier = modifier.wrapContentHeight()) {
         Icon(
             imageVector = if (isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
             contentDescription = null,
@@ -43,7 +44,7 @@ fun ExpandProgress(
             VerticalProgress(
                 newProgress = progress,
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = 8.dp, bottom = 16.dp)
                     .align(Alignment.CenterHorizontally)
                     .weight(1f)
             )
