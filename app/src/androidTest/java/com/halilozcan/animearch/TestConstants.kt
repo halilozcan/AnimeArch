@@ -1,8 +1,10 @@
 package com.halilozcan.animearch
 
-import com.halilozcan.animearch.ui.AnimeDetailUiData
-import com.halilozcan.animearch.ui.AnimeHomeUiData
+import androidx.annotation.VisibleForTesting
+import com.halilozcan.animearch.core.common.AnimeDetailUiData
+import com.halilozcan.animearch.core.common.AnimeHomeUiData
 
+@VisibleForTesting
 val animeDetailUiData = AnimeDetailUiData(
     name = "Lelouch Lamperouge",
     nameKanji = "ルルーシュ・ランペルージ",
@@ -45,6 +47,7 @@ val animeDetailUiData = AnimeDetailUiData(
     favorites = 150000,
 )
 
+@VisibleForTesting
 val animeUiList = listOf(
     AnimeHomeUiData(
         id = "417",
