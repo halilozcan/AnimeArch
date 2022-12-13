@@ -5,13 +5,15 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.halilozcan.animearch.R
 import com.halilozcan.animearch.animeUiList
+import com.halilozcan.animearch.core.common.ScreenState
+import com.halilozcan.animearch.feature.home.HomeScreen
+import com.halilozcan.animearch.feature.home.LOADING_ITEM_LAZY_COLUMN_TEST_TAG
 import com.halilozcan.animearch.ui.MainActivity
-import com.halilozcan.animearch.ui.ScreenState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import com.halilozcan.animearch.core.common.R as coreRes
 
 class HomeScreenTest {
 
@@ -23,14 +25,16 @@ class HomeScreenTest {
     @Before
     fun setup() {
         composeTestRule.activity.apply {
-            errorMessage = getString(R.string.error)
+            errorMessage = getString(coreRes.string.error)
         }
     }
 
     @Test
     fun loadingView_whenAnimeResponseLoading_showLoading() {
         composeTestRule.activity.setContent {
-            HomeScreen(uiState = ScreenState.Loading, onAnimeClicked = {})
+            HomeScreen(
+                uiState = ScreenState.Loading,
+                onAnimeClicked = {})
         }
         composeTestRule.onNodeWithTag(LOADING_ITEM_LAZY_COLUMN_TEST_TAG).assertIsDisplayed()
     }
@@ -39,7 +43,10 @@ class HomeScreenTest {
     @Test
     fun animeName_whenAnimeResponseSuccess_isShown() {
         composeTestRule.activity.setContent {
-            HomeScreen(uiState = ScreenState.Success(animeUiList), onAnimeClicked = {})
+            HomeScreen(
+                uiState = ScreenState.Success(
+                    animeUiList
+                ), onAnimeClicked = {})
         }
         composeTestRule.onNodeWithText(animeUiList.first().name).assertIsDisplayed()
     }
@@ -47,7 +54,9 @@ class HomeScreenTest {
     @Test
     fun errorMessage_whenAnimeListSuccess_isShown() {
         composeTestRule.activity.setContent {
-            HomeScreen(uiState = ScreenState.Error(R.string.error), onAnimeClicked = {})
+            HomeScreen(
+                uiState = ScreenState.Error(coreRes.string.error),
+                onAnimeClicked = {})
         }
         composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
     }
