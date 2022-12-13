@@ -6,7 +6,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.halilozcan.animearch.ui.theme.AnimeArchTheme
+import com.halilozcan.animearch.core.design.theme.AnimeArchTheme
+import com.halilozcan.animearch.navigation.AnimeNavHost
 
 @Composable
 fun AnimeArchApp() {

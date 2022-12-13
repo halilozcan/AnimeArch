@@ -14,3 +14,11 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AnimeArch"
 include ':app'
+include ':core'
+include ':core:data'
+include ':core:domain'
+include ':feature'
+include ':feature:home'
+include ':feature:detail'
+include ':core:common'
+include ':core:design'

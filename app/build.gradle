@@ -43,11 +43,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "ANIME_API_URL", "\"https://api.jikan.moe/v4/\""
-        }
-
-        debug {
-            buildConfigField "String", "ANIME_API_URL", "\"https://api.jikan.moe/v4/\""
         }
     }
     compileOptions {
@@ -75,30 +70,21 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:design"))
+    implementation(project(":core:domain"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:detail"))
+
     // Android
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-
-    // Retrofit & okhttp
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$retrofit_interceptor_version"
-
-    // Coil
-    implementation "io.coil-kt:coil:$coil_version"
-    implementation("io.coil-kt:coil-compose:2.2.2")
 
     // Compose
     def composeBom = platform('androidx.compose:compose-bom:2022.10.00')
@@ -115,46 +101,6 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.5.3"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
     implementation 'com.airbnb.android:lottie-compose:4.2.0'
-
-    // Splash Screen
-    implementation "androidx.core:core-splashscreen:$splash_version"
-
-    /** Testing **/
-    // Compose
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
-
-    // Junit
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
-
-    // Hilt Testing
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
-
-    // AndroidX Core Text
-    implementation "androidx.arch.core:core-testing:$androidx_core_test_version"
-
-    // Espresso
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-
-    // Fragment
-    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
-
-    // Mockito
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin_version"
-    testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
-
-    // MockWebServer
-    testImplementation "com.squareup.okhttp3:mockwebserver:$mock_webserver_version"
-
-    // Truth
-    testImplementation "com.google.truth:truth:$truth_version"
-
-    // Coroutines-Test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
-
-    // Turbine
-    testImplementation "app.cash.turbine:turbine:$turbine_version"
 }

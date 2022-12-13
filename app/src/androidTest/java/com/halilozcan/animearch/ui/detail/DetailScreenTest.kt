@@ -4,13 +4,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.halilozcan.animearch.R
 import com.halilozcan.animearch.animeDetailUiData
+import com.halilozcan.animearch.core.common.ScreenState
+import com.halilozcan.animearch.feature.detail.DetailScreen
 import com.halilozcan.animearch.ui.MainActivity
-import com.halilozcan.animearch.ui.ScreenState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import com.halilozcan.animearch.core.common.R as coreRes
 
 internal class DetailScreenTest {
 
@@ -22,14 +23,18 @@ internal class DetailScreenTest {
     @Before
     fun setup() {
         composeTestRule.activity.apply {
-            errorMessage = getString(R.string.error)
+            errorMessage = getString(coreRes.string.error)
         }
     }
 
     @Test
     fun detailAnimeName_whenAnimeResponseSuccess_isShown() {
         composeTestRule.activity.setContent {
-            DetailScreen(uiState = ScreenState.Success(animeDetailUiData))
+            DetailScreen(
+                uiState = ScreenState.Success(
+                    animeDetailUiData
+                )
+            )
         }
         composeTestRule.onNodeWithText(animeDetailUiData.name).assertIsDisplayed()
     }
@@ -37,7 +42,11 @@ internal class DetailScreenTest {
     @Test
     fun detailAnimeKanjiName_whenAnimeResponseSuccess_isShown() {
         composeTestRule.activity.setContent {
-            DetailScreen(uiState = ScreenState.Success(animeDetailUiData))
+            DetailScreen(
+                uiState = ScreenState.Success(
+                    animeDetailUiData
+                )
+            )
         }
         composeTestRule.onNodeWithText(animeDetailUiData.nameKanji).assertIsDisplayed()
     }
@@ -45,7 +54,7 @@ internal class DetailScreenTest {
     @Test
     fun detailErrorMessage_whenAnimeResponseError_isShown() {
         composeTestRule.activity.setContent {
-            DetailScreen(uiState = ScreenState.Error(R.string.error))
+            DetailScreen(uiState = ScreenState.Error(coreRes.string.error))
         }
         composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
     }
