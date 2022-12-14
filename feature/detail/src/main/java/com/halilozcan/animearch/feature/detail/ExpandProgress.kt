@@ -11,6 +11,9 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +30,10 @@ fun ExpandProgress(
     onExpandClicked: () -> Unit,
     onProgressChanged: (Float) -> Unit
 ) {
+    val isContentScrollable by remember {
+        derivedStateOf { scrollState.maxValue > 0f }
+    }
+
     Column(modifier = modifier.wrapContentHeight()) {
         Icon(
             imageVector = if (isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
@@ -36,11 +43,10 @@ fun ExpandProgress(
                 .align(Alignment.CenterHorizontally)
         )
 
-        if (isExpanded) {
+        if (isExpanded && isContentScrollable) {
             if (scrollState.isScrollInProgress) {
                 onProgressChanged(scrollState.value.toFloat() / scrollState.maxValue.toFloat() * 100f)
             }
-
             VerticalProgress(
                 newProgress = progress,
                 modifier = Modifier
