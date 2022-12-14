@@ -38,7 +38,15 @@ fun ExpandProgress(
 
         if (isExpanded) {
             if (scrollState.isScrollInProgress) {
-                onProgressChanged(scrollState.value.toFloat() / scrollState.maxValue.toFloat() * 100f)
+                val isScrollable = scrollState.maxValue.toFloat() > 0
+
+                val changedProgress = if (isScrollable) {
+                    scrollState.value.toFloat() / scrollState.maxValue.toFloat() * 100f
+                } else {
+                    100f
+                }
+
+                onProgressChanged(changedProgress)
             }
 
             VerticalProgress(
