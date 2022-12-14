@@ -65,17 +65,23 @@ fun SuccessScreen(uiData: AnimeDetailUiData, modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
 
     Column(modifier = modifier) {
-        Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            CircleImage(
-                imageUrl = uiData.imageUrl,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+        Card(modifier = Modifier.padding(start = 16.dp)) {
+            Row {
+                CircleImage(
+                    imageUrl = uiData.imageUrl,
+                    modifier = Modifier
+                        .height(IntrinsicSize.Max)
+                )
 
-            NameSection(
-                name = uiData.name,
-                kanjiName = uiData.nameKanji,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+                NameSection(
+                    name = uiData.name,
+                    kanjiName = uiData.nameKanji,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
