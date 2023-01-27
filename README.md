@@ -11,7 +11,7 @@ An anime info app for teaching how to use Jetpack Compose (State, Navigation, An
 </p>
 
 
-## Screeshots
+## Screenshots
 <p align="center">
 <img src="/previews/home_initial.png" width="20%"/>
 <img src="/previews/home_expanded.png" width="20%"/>
@@ -41,32 +41,11 @@ An anime info app for teaching how to use Jetpack Compose (State, Navigation, An
   - [Turbine](https://github.com/cashapp/turbine) A small testing library for kotlinx.coroutines Flow
 - [Material Design 3](https://m3.material.io/) is the latest version of Google’s open-source design system.
 
-## Package Structure
-    
-    com.halilozcan.animearch # Root Package
-    .
-    ├── data                # Data layer
-    │   ├── api             # AnimeApi     
-    │   ├── dto             # Data transfer objects for remote response
-    │   ├── repository      # Anime repository
-    │   ├── source          # Remote or local data sources(for now remote only)
-    |
-    ├── di                  # Dependency Injection             
-    │   ├── coroutine       # Coroutine Dispatcher Module      
-    │   │── mapper          # AnimeMapper Module
-    │   │── network         # Network Modu(okHttp & Retrofit) & SourceModule
-    │   │── repository      # Repository Module
-    |
-    ├── domain              # Domain Layer(UseCases) 
-    |   ├── entity          # Domain entities
-    |   ├── mapper          # Domain mappers
-    |   ├── usecase         # Anime usecases
-    |
-    ├── ui                  # Activity / ViewModel/ Composables (Ui) layer
-    │   ├── detail          # DetailUiMapper, ViewModel and detail Composables
-    │   ├── home            # HomeUiMapper, ViewModel and detail Composables
-    |   ├── theme           # Colors, typography and theme options   
-    
+## Dependency graph
+<p align="center">
+<img src="/previews/dependency_graph.png" width="80%" height="500px"/>
+</p>
+
 ## Architecture
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture
 
