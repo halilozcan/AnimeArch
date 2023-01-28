@@ -1,6 +1,9 @@
 package com.halilozcan.animearch.core.data.source
 
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.halilozcan.animearch.core.common.NetworkResponseState
+import com.halilozcan.animearch.core.data.api.AnimeApi
 import com.halilozcan.animearch.core.data.singleAnimeCharacterResponse
 import com.halilozcan.animearch.core.data.singleAnimePathId
 import com.halilozcan.animearch.core.data.topAnimeCharacterResponse
@@ -14,7 +17,7 @@ import org.mockito.MockitoAnnotations
 internal class RemoteDataSourceTest {
 
     @Mock
-    private lateinit var animeApi: com.halilozcan.animearch.core.data.api.AnimeApi
+    private lateinit var animeApi: AnimeApi
 
     private lateinit var remoteDataSource: RemoteDataSourceImpl
 
@@ -31,8 +34,12 @@ internal class RemoteDataSourceTest {
     fun topAnimeResponse_whenApiReturnSuccess_isResponseStateSuccess() {
         runBlocking {
             Mockito.`when`(animeApi.getTopCharacters()).thenReturn(topAnimeCharacterResponse)
-            val response = remoteDataSource.getTopAnimeCharacters()
-            assertThat(response).isInstanceOf(com.halilozcan.animearch.core.common.NetworkResponseState.Success::class.java)
+            remoteDataSource.getTopAnimeCharacters().test {
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Success::class.java)
+                awaitComplete()
+            }
+
         }
     }
 
@@ -40,8 +47,11 @@ internal class RemoteDataSourceTest {
     fun topAnimeResponse_whenApiReturnNull_isResponseStateError() {
         runBlocking {
             Mockito.`when`(animeApi.getTopCharacters()).thenReturn(null)
-            val response = remoteDataSource.getTopAnimeCharacters()
-            assertThat(response).isInstanceOf(com.halilozcan.animearch.core.common.NetworkResponseState.Error::class.java)
+            remoteDataSource.getTopAnimeCharacters().test {
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Error::class.java)
+                awaitComplete()
+            }
         }
     }
 
@@ -54,8 +64,12 @@ internal class RemoteDataSourceTest {
             Mockito.`when`(animeApi.getSingleCharacterFull(singleAnimePathId)).thenReturn(
                 singleAnimeCharacterResponse
             )
-            val response = remoteDataSource.getSingleCharacter(singleAnimePathId)
-            assertThat(response).isInstanceOf(com.halilozcan.animearch.core.common.NetworkResponseState.Success::class.java)
+
+            remoteDataSource.getSingleCharacter(singleAnimePathId).test {
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Success::class.java)
+                awaitComplete()
+            }
         }
     }
 
@@ -63,8 +77,11 @@ internal class RemoteDataSourceTest {
     fun singleAnimeResponse_whenApiReturnSuccess_isResponseStateError() {
         runBlocking {
             Mockito.`when`(animeApi.getSingleCharacterFull(singleAnimePathId)).thenReturn(null)
-            val response = remoteDataSource.getSingleCharacter(singleAnimePathId)
-            assertThat(response).isInstanceOf(com.halilozcan.animearch.core.common.NetworkResponseState.Error::class.java)
+            remoteDataSource.getSingleCharacter(singleAnimePathId).test {
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Error::class.java)
+                awaitComplete()
+            }
         }
     }
 }

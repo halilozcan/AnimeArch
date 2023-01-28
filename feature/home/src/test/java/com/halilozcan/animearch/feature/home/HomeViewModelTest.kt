@@ -59,9 +59,8 @@ internal class HomeViewModelTest {
     @Test
     fun state_WhenUseCaseReturnsDownloadingAndSuccess_isDownloadingAndSuccessSequentially() {
         runTest {
-            val resultList = listOf(
-                NetworkResponseState.Loading, NetworkResponseState.Success(topAnimeEntities)
-            )
+            val resultList =
+                listOf(NetworkResponseState.Loading, NetworkResponseState.Success(topAnimeEntities))
             whenever(getFakeGetTopCharacterUseCase.invoke()).thenReturn(resultList.asFlow())
 
             val listOfEmittedResult =
@@ -78,9 +77,8 @@ internal class HomeViewModelTest {
     @Test
     fun state_WhenUseCaseReturnsDownloadingAndError_isDownloadingAndErrorSequentially() {
         runTest {
-            val resultList = listOf(
-                NetworkResponseState.Loading, NetworkResponseState.Error(IOException())
-            )
+            val resultList =
+                listOf(NetworkResponseState.Loading, NetworkResponseState.Error(IOException()))
             whenever(getFakeGetTopCharacterUseCase.invoke()).thenReturn(resultList.asFlow())
 
             val listOfEmittedResult =

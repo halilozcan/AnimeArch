@@ -8,6 +8,8 @@ import com.halilozcan.animearch.core.data.dto.single.SingleCharacterResponse
 import com.halilozcan.animearch.core.data.dto.single.WebpX
 import com.halilozcan.animearch.core.data.dto.top.Anime
 import com.halilozcan.animearch.core.data.dto.top.TopAnimeCharacterResponse
+import com.halilozcan.animearch.core.domain.entity.SingleAnimeEntity
+import com.halilozcan.animearch.core.domain.entity.TopAnimeEntity
 
 const val TOP_ANIME_CHARACTERS_RESPONSE_FILE_NAME = "TopAnimeCharactersResponse.json"
 const val SINGLE_ANIME_CHARACTER_RESPONSE_FILE_NAME = "SingleAnimeCharacterResponse.json"
@@ -56,9 +58,35 @@ val topAnimeCharacterResponse =
 val singleAnimeCharacterResponse =
     SingleCharacterResponse(data = singleAnime)
 
+
+@VisibleForTesting
+const val SERVER_PORT = 8000
+
+@VisibleForTesting
+val topAnimeList = listOf(topAnime)
+
 @VisibleForTesting
 const val singleAnimePathId = "417"
 
 @VisibleForTesting
-const val SERVER_PORT = 8000
+val singleAnimeEntity =
+    SingleAnimeEntity(
+        id = "417",
+        name = "Levi",
+        nameKanji = "ルルーシュ・ランペルージ",
+        description = "",
+        imageUrl = "https://cdn.myanimelist.net/images/characters/8/406163.webp",
+        favorites = 159789
+    )
+
+@VisibleForTesting
+val topAnimeEntity = TopAnimeEntity(
+    id = "417",
+    name = "Lelouch Lamperouge",
+    description = "",
+    imageUrl = "https://cdn.myanimelist.net/images/characters/8/406163.webp"
+)
+
+@VisibleForTesting
+val topAnimeEntities = listOf(topAnimeEntity)
 

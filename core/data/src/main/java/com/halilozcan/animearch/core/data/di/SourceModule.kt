@@ -12,10 +12,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @InstallIn(ViewModelComponent::class)
 abstract class SourceModule {
 
-
     @Binds
     @ViewModelScoped
-    abstract fun bindRemoteDataSource(
-        remoteDataSourceImpl: RemoteDataSourceImpl
-    ): RemoteDataSource
+    abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
 }

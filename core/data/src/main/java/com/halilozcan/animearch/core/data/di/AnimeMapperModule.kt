@@ -1,13 +1,13 @@
-package com.halilozcan.animearch.core.domain.di
+package com.halilozcan.animearch.core.data.di
 
 import com.halilozcan.animearch.core.data.dto.single.AnimeCharacter
 import com.halilozcan.animearch.core.data.dto.top.Anime
+import com.halilozcan.animearch.core.data.mapper.SingleAnimeEntityMapper
+import com.halilozcan.animearch.core.data.mapper.TopAnimeEntityMapper
 import com.halilozcan.animearch.core.domain.entity.SingleAnimeEntity
 import com.halilozcan.animearch.core.domain.entity.TopAnimeEntity
 import com.halilozcan.animearch.core.domain.mapper.AnimeBaseMapper
 import com.halilozcan.animearch.core.domain.mapper.AnimeListMapper
-import com.halilozcan.animearch.core.domain.mapper.SingleAnimeEntityMapper
-import com.halilozcan.animearch.core.domain.mapper.TopAnimeEntityMapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

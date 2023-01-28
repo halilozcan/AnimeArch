@@ -69,7 +69,8 @@ internal class DetailViewModelTest {
     fun state_WhenUseCaseReturnsDownloadingAndSuccess_isDownloadingAndSuccessSequentially() {
         runTest {
             val resultList = listOf(
-                NetworkResponseState.Loading, NetworkResponseState.Success(singleAnimeEntity)
+                NetworkResponseState.Loading,
+                NetworkResponseState.Success(singleAnimeEntity)
             )
             whenever(getFakeGetSingleCharacterUseCase.invoke(singleAnimePathId)).thenReturn(
                 resultList.asFlow()
@@ -89,9 +90,8 @@ internal class DetailViewModelTest {
     @Test
     fun state_WhenUseCaseReturnsDownloadingAndError_isDownloadingAndErrorSequentially() {
         runTest {
-            val resultList = listOf(
-                NetworkResponseState.Loading, NetworkResponseState.Error(IOException())
-            )
+            val resultList =
+                listOf(NetworkResponseState.Loading, NetworkResponseState.Error(IOException()))
             whenever(getFakeGetSingleCharacterUseCase.invoke(singleAnimePathId)).thenReturn(
                 resultList.asFlow()
             )

@@ -1,7 +1,7 @@
-package com.halilozcan.animearch.core.domain.mapper
+package com.halilozcan.animearch.core.data.mapper
 
+import com.halilozcan.animearch.core.data.singleAnime
 import com.halilozcan.animearch.core.domain.entity.SingleAnimeEntity
-import com.halilozcan.animearch.core.domain.singleAnime
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before

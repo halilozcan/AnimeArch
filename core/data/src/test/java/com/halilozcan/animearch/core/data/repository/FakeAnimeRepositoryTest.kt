@@ -1,16 +1,13 @@
 package com.halilozcan.animearch.core.data.repository
 
-import com.google.common.truth.Truth.assertThat
+import app.cash.turbine.test
+import com.google.common.truth.Truth
 import com.halilozcan.animearch.core.common.NetworkResponseState
-import com.halilozcan.animearch.core.data.singleAnimeCharacterResponse
 import com.halilozcan.animearch.core.data.singleAnimePathId
-import com.halilozcan.animearch.core.data.topAnimeCharacterResponse
 import kotlinx.coroutines.runBlocking
-import okio.IOException
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 /**
@@ -18,13 +15,7 @@ import org.mockito.MockitoAnnotations
  */
 internal class FakeAnimeRepositoryTest {
 
-    @Mock
-    private lateinit var fakeAnimeRepository: FakeAnimeRepository
-
-    @Before
-    fun setup() {
-        MockitoAnnotations.openMocks(this)
-    }
+    private val fakeAnimeRepository =  FakeAnimeRepository()
 
     /**
      * TopAnimeCharacters Test
@@ -32,10 +23,11 @@ internal class FakeAnimeRepositoryTest {
     @Test
     fun topAnimeCharacterResponse_whenRemoteDataSourceReturnSuccess_returnSuccess() {
         runBlocking {
-            Mockito.`when`(fakeAnimeRepository.getTopAnimeCharacters())
-                .thenReturn(NetworkResponseState.Success(topAnimeCharacterResponse))
-            val state = fakeAnimeRepository.getTopAnimeCharacters()
-            assertThat(state).isInstanceOf(NetworkResponseState.Success::class.java)
+            fakeAnimeRepository.getTopAnimeCharacters().test {
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Success::class.java)
+                awaitComplete()
+            }
         }
     }
 
@@ -43,10 +35,11 @@ internal class FakeAnimeRepositoryTest {
     fun topAnimeCharacterResponse_whenRemoteDataSourceReturnError_returnError() {
         runBlocking {
             fakeAnimeRepository.updateShowErrorTopAnimeCharacterResponse(true)
-            Mockito.`when`(fakeAnimeRepository.getTopAnimeCharacters())
-                .thenReturn(NetworkResponseState.Error(IOException()))
-            val state = fakeAnimeRepository.getTopAnimeCharacters()
-            assertThat(state).isInstanceOf(NetworkResponseState.Error::class.java)
+            fakeAnimeRepository.getTopAnimeCharacters().test {
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Error::class.java)
+                awaitComplete()
+            }
         }
     }
 
@@ -56,10 +49,11 @@ internal class FakeAnimeRepositoryTest {
     @Test
     fun singleAnimeCharacterResponse_whenRemoteDataSourceReturnSuccess_returnSuccess() {
         runBlocking {
-            Mockito.`when`(fakeAnimeRepository.getSingleCharacter(singleAnimePathId))
-                .thenReturn(NetworkResponseState.Success(singleAnimeCharacterResponse))
-            val state = fakeAnimeRepository.getSingleCharacter(singleAnimePathId)
-            assertThat(state).isInstanceOf(NetworkResponseState.Success::class.java)
+            fakeAnimeRepository.getSingleCharacter(singleAnimePathId).test {
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Success::class.java)
+                awaitComplete()
+            }
         }
     }
 
@@ -67,10 +61,11 @@ internal class FakeAnimeRepositoryTest {
     fun singleAnimeCharacterResponse_whenRemoteDataSourceReturnError_returnError() {
         runBlocking {
             fakeAnimeRepository.updateShowErrorSingleAnimeCharacterResponse(true)
-            Mockito.`when`(fakeAnimeRepository.getSingleCharacter(singleAnimePathId))
-                .thenReturn(NetworkResponseState.Error(IOException()))
-            val state = fakeAnimeRepository.getSingleCharacter(singleAnimePathId)
-            assertThat(state).isInstanceOf(NetworkResponseState.Error::class.java)
+            fakeAnimeRepository.getSingleCharacter(singleAnimePathId).test {
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Loading::class.java)
+                Truth.assertThat(awaitItem()).isInstanceOf(NetworkResponseState.Error::class.java)
+                awaitComplete()
+            }
         }
     }
 }
