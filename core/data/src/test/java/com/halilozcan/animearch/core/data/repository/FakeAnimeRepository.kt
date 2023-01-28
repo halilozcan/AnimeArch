@@ -1,10 +1,12 @@
 package com.halilozcan.animearch.core.data.repository
 
 import com.halilozcan.animearch.core.common.NetworkResponseState
-import com.halilozcan.animearch.core.data.dto.single.SingleCharacterResponse
-import com.halilozcan.animearch.core.data.dto.top.TopAnimeCharacterResponse
-import com.halilozcan.animearch.core.data.singleAnimeCharacterResponse
-import com.halilozcan.animearch.core.data.topAnimeCharacterResponse
+import com.halilozcan.animearch.core.data.*
+import com.halilozcan.animearch.core.domain.entity.SingleAnimeEntity
+import com.halilozcan.animearch.core.domain.entity.TopAnimeEntity
+import com.halilozcan.animearch.core.domain.repository.AnimeRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okio.IOException
 
 class FakeAnimeRepository : AnimeRepository {
@@ -20,19 +22,22 @@ class FakeAnimeRepository : AnimeRepository {
         this.showErrorForSingleAnimeCharacter = showError
     }
 
-    override suspend fun getTopAnimeCharacters(): NetworkResponseState<TopAnimeCharacterResponse> {
-        return if (showErrorForTopAnimeCharacter) {
-            NetworkResponseState.Error(IOException())
+    override fun getTopAnimeCharacters(): Flow<NetworkResponseState<List<TopAnimeEntity>>> = flow {
+        emit(NetworkResponseState.Loading)
+        if (showErrorForTopAnimeCharacter) {
+            emit(NetworkResponseState.Error(IOException()))
         } else {
-            NetworkResponseState.Success(topAnimeCharacterResponse)
+            emit(NetworkResponseState.Success(topAnimeEntities))
         }
     }
 
-    override suspend fun getSingleCharacter(id: String): NetworkResponseState<SingleCharacterResponse> {
-        return if (showErrorForSingleAnimeCharacter) {
-            NetworkResponseState.Error(IOException())
-        } else {
-            NetworkResponseState.Success(singleAnimeCharacterResponse)
+    override fun getSingleCharacter(id: String): Flow<NetworkResponseState<SingleAnimeEntity>> =
+        flow {
+            emit(NetworkResponseState.Loading)
+            if (showErrorForSingleAnimeCharacter) {
+                emit(NetworkResponseState.Error(IOException()))
+            } else {
+                emit(NetworkResponseState.Success(singleAnimeEntity))
+            }
         }
-    }
 }

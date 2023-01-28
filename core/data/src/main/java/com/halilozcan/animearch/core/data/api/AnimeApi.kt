@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AnimeApi {
-
     @GET("top/characters")
     suspend fun getTopCharacters(): TopAnimeCharacterResponse
 

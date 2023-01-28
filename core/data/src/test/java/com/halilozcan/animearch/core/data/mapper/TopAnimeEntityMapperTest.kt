@@ -1,7 +1,7 @@
-package com.halilozcan.animearch.core.domain.mapper
+package com.halilozcan.animearch.core.data.mapper
 
+import com.halilozcan.animearch.core.data.topAnimeList
 import com.halilozcan.animearch.core.domain.entity.TopAnimeEntity
-import com.halilozcan.animearch.core.domain.topAnimeList
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
