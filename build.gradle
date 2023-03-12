@@ -22,9 +22,6 @@ ext {
     // Dagger Hilt
     hilt_version = "2.43"
 
-    // Navigation Component
-    nav_version = "2.5.1"
-
     // Compose Destinations
     compose_destinations_version = "1.7.36-beta"
 
