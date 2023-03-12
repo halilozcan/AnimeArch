@@ -28,7 +28,13 @@ import com.halilozcan.animearch.core.common.AnimeDetailUiData
 import com.halilozcan.animearch.core.common.ScreenState
 import com.halilozcan.animearch.core.design.component.Error
 import com.halilozcan.animearch.core.design.theme.AnimeArchTheme
+import com.ramcosta.composedestinations.annotation.Destination
 
+data class DetailRouteNavArgs(
+    val id: String
+)
+
+@Destination(navArgsDelegate = DetailRouteNavArgs::class)
 @Composable
 fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
     val uiState by viewModel.screenState.collectAsState(initial = ScreenState.Loading)
