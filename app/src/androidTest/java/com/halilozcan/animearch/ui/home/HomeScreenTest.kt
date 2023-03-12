@@ -21,6 +21,10 @@ class HomeScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
+    private val navigator = object : HomeScreenNavigator {
+        override fun navigateToDetailScreen(id: String) {}
+    }
+
     private lateinit var errorMessage: String
 
     @Before
@@ -35,9 +39,7 @@ class HomeScreenTest {
         composeTestRule.activity.setContent {
             HomeScreen(
                 uiState = ScreenState.Loading,
-                navigator = object : HomeScreenNavigator {
-                    override fun navigateToDetailScreen(id: String) {}
-                }
+                navigator = navigator
             )
         }
         composeTestRule.onNodeWithTag(LOADING_ITEM_LAZY_COLUMN_TEST_TAG).assertIsDisplayed()
@@ -51,9 +53,7 @@ class HomeScreenTest {
                 uiState = ScreenState.Success(
                     animeUiList
                 ),
-                navigator = object : HomeScreenNavigator {
-                    override fun navigateToDetailScreen(id: String) {}
-                }
+                navigator = navigator
             )
         }
         composeTestRule.onNodeWithText(animeUiList.first().name).assertIsDisplayed()
@@ -64,9 +64,7 @@ class HomeScreenTest {
         composeTestRule.activity.setContent {
             HomeScreen(
                 uiState = ScreenState.Error(coreRes.string.error),
-                navigator = object : HomeScreenNavigator {
-                    override fun navigateToDetailScreen(id: String) {}
-                }
+                navigator = navigator
             )
         }
         composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
