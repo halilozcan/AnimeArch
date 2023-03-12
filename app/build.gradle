@@ -103,4 +103,5 @@ dependencies {
     implementation 'com.airbnb.android:lottie-compose:4.2.0'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    implementation "io.github.raamcosta.compose-destinations:core:$compose_destinations_version"
 }

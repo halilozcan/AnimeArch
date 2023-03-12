@@ -6,6 +6,7 @@ plugins {
     id 'com.google.dagger.hilt.android' version '2.43' apply false
     id 'org.jetbrains.kotlin.jvm' version '1.7.20' apply false
     id 'com.vanniktech.dependency.graph.generator' version '0.8.0' apply true
+    id 'com.google.devtools.ksp' version '1.7.20-1.0.8' apply false
 }
 
 ext {
@@ -23,6 +24,9 @@ ext {
 
     // Navigation Component
     nav_version = "2.5.1"
+
+    // Compose Destinations
+    compose_destinations_version = "1.7.36-beta"
 
     // Retrofit & OkHttp
     retrofit_version = "2.9.0"
