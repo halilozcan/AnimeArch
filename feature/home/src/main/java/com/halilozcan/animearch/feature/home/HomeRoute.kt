@@ -31,23 +31,26 @@ import com.halilozcan.animearch.core.common.AnimeHomeUiData
 import com.halilozcan.animearch.core.common.ScreenState
 import com.halilozcan.animearch.core.design.component.Error
 import com.halilozcan.animearch.core.design.theme.AnimeArchTheme
+import com.ramcosta.composedestinations.annotation.Destination
 import com.halilozcan.animearch.core.common.R as coreRes
 
 const val LOADING_ITEM_LAZY_COLUMN_TEST_TAG = "loading_item_lazy_column_test_tag"
 
+
+@Destination
 @Composable
 fun HomeRoute(
-    onAnimeClicked: (AnimeHomeUiData) -> Unit,
+    navigator: HomeScreenNavigator,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.screenState.collectAsState(initial = ScreenState.Loading)
-    HomeScreen(uiState = uiState, onAnimeClicked = onAnimeClicked)
+    HomeScreen(uiState = uiState, navigator = navigator)
 }
 
 @Composable
 fun HomeScreen(
     uiState: ScreenState<List<AnimeHomeUiData>>,
-    onAnimeClicked: (AnimeHomeUiData) -> Unit
+    navigator: HomeScreenNavigator
 ) {
     Surface(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -59,7 +62,7 @@ fun HomeScreen(
                     Loading()
                 }
                 is ScreenState.Success -> {
-                    AnimeList(animeList = uiState.uiData, onAnimeClicked = onAnimeClicked)
+                    AnimeList(animeList = uiState.uiData, navigator = navigator)
                 }
             }
         }
@@ -139,7 +142,7 @@ fun LoadingItem() {
 }
 
 @Composable
-fun AnimeList(animeList: List<AnimeHomeUiData>, onAnimeClicked: (AnimeHomeUiData) -> Unit) {
+fun AnimeList(animeList: List<AnimeHomeUiData>, navigator: HomeScreenNavigator) {
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
@@ -147,13 +150,13 @@ fun AnimeList(animeList: List<AnimeHomeUiData>, onAnimeClicked: (AnimeHomeUiData
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(animeList) { anime ->
-            Anime(animeHomeUiData = anime, onAnimeClicked = onAnimeClicked)
+            Anime(animeHomeUiData = anime, navigator = navigator)
         }
     }
 }
 
 @Composable
-fun Anime(animeHomeUiData: AnimeHomeUiData, onAnimeClicked: (AnimeHomeUiData) -> Unit) {
+fun Anime(animeHomeUiData: AnimeHomeUiData, navigator: HomeScreenNavigator) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     val height by animateDpAsState(
@@ -167,7 +170,7 @@ fun Anime(animeHomeUiData: AnimeHomeUiData, onAnimeClicked: (AnimeHomeUiData) ->
         shape = RoundedCornerShape(8.dp),
     ) {
         Row(modifier = Modifier.clickable {
-            onAnimeClicked.invoke(animeHomeUiData)
+            navigator.navigateToDetailScreen(id = animeHomeUiData.id)
         }) {
             AsyncImage(
                 model = animeHomeUiData.imageUrl,
@@ -230,7 +233,9 @@ fun AnimePreview() {
                 "Lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
                 "url"
             ),
-            onAnimeClicked = {}
+            navigator = object : HomeScreenNavigator {
+                override fun navigateToDetailScreen(id: String) {}
+            }
         )
     }
 }

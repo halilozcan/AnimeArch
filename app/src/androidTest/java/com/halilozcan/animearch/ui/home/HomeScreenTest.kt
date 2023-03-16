@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import com.halilozcan.animearch.animeUiList
 import com.halilozcan.animearch.core.common.ScreenState
 import com.halilozcan.animearch.feature.home.HomeScreen
+import com.halilozcan.animearch.feature.home.HomeScreenNavigator
 import com.halilozcan.animearch.feature.home.LOADING_ITEM_LAZY_COLUMN_TEST_TAG
 import com.halilozcan.animearch.ui.MainActivity
 import org.junit.Before
@@ -19,6 +20,10 @@ class HomeScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
+    private val navigator = object : HomeScreenNavigator {
+        override fun navigateToDetailScreen(id: String) {}
+    }
 
     private lateinit var errorMessage: String
 
@@ -34,7 +39,8 @@ class HomeScreenTest {
         composeTestRule.activity.setContent {
             HomeScreen(
                 uiState = ScreenState.Loading,
-                onAnimeClicked = {})
+                navigator = navigator
+            )
         }
         composeTestRule.onNodeWithTag(LOADING_ITEM_LAZY_COLUMN_TEST_TAG).assertIsDisplayed()
     }
@@ -46,7 +52,9 @@ class HomeScreenTest {
             HomeScreen(
                 uiState = ScreenState.Success(
                     animeUiList
-                ), onAnimeClicked = {})
+                ),
+                navigator = navigator
+            )
         }
         composeTestRule.onNodeWithText(animeUiList.first().name).assertIsDisplayed()
     }
@@ -56,7 +64,8 @@ class HomeScreenTest {
         composeTestRule.activity.setContent {
             HomeScreen(
                 uiState = ScreenState.Error(coreRes.string.error),
-                onAnimeClicked = {})
+                navigator = navigator
+            )
         }
         composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
     }

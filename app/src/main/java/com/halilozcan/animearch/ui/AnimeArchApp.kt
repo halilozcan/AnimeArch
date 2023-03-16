@@ -7,7 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.halilozcan.animearch.core.design.theme.AnimeArchTheme
-import com.halilozcan.animearch.navigation.AnimeNavHost
+import com.halilozcan.animearch.navigation.CoreFeatureNavigator
+import com.halilozcan.animearch.navigation.navGraph.HomeNavGraph
+import com.halilozcan.animearch.navigation.navGraph.RootNavGraph
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.navigation.dependency
 
 @Composable
 fun AnimeArchApp() {
@@ -17,7 +21,18 @@ fun AnimeArchApp() {
             color = MaterialTheme.colorScheme.background
         ) {
             val navController = rememberNavController()
-            AnimeNavHost(navController = navController)
+            DestinationsNavHost(
+                navGraph = RootNavGraph,
+                navController = navController,
+                startRoute = HomeNavGraph,
+                dependenciesContainerBuilder = {
+                    dependency(
+                        CoreFeatureNavigator(
+                            navController = navController
+                        )
+                    )
+                }
+            )
         }
     }
 }
